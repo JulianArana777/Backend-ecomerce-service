@@ -43,6 +43,7 @@ namespace Api.Service
                 description= dto.description
             };
             _context.Products.Add(product);
+            await _context.SaveChangesAsync();
             return product;
         }
     }

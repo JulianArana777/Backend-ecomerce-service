@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiBackend.Components.Repository.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20260120200410_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260121040539_ProductMigration")]
+    partial class ProductMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,19 +21,17 @@ namespace ApiBackend.Components.Repository.Migrations
 
             modelBuilder.Entity("API.Entities.Product", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("description")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Products");
                 });

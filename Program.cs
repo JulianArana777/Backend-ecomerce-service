@@ -1,3 +1,4 @@
+using Api.Service;
 using API.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<StoreContext>(x=> x.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<StoreContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddControllers();
+builder.Services.AddScoped<ProductService>();
 
 var app = builder.Build();
 
@@ -18,8 +22,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseSwagger();
-app.UseSwaggerUI();
+app.MapControllers();
 
 
 

@@ -10,7 +10,7 @@ namespace API.Controller
 {
     
     [ApiController]
-    [ Route("/api/product")]
+    [ Route("/api/[Controller]")]
     public class ProductController : ControllerBase
     {
         private readonly ProductService _service;
@@ -39,7 +39,7 @@ namespace API.Controller
           var product = await _service.CreateProduct(dto);
            return CreatedAtAction(
                 nameof(GetProductById),
-                new { id = product.id },
+                new { id = product.Id },
                 product
             );
         }
