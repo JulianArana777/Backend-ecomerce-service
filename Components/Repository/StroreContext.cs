@@ -12,5 +12,7 @@ namespace API.Repository
     }
 
     public DbSet<Product> Products {get;set;}
+    public DbSet<ProductType> ProductsType {get;set;}
+    public DbSet<ProductBrand> ProductBrands {get;set;}
     }
 }

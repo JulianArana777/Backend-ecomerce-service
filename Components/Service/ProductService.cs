@@ -1,6 +1,7 @@
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using Api.DTO;
+using Api.Repository;
 using API.Entities;
 using API.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -11,18 +12,19 @@ namespace Api.Service
     {
 
         private readonly StoreContext _context;
-        public ProductService(StoreContext  context)
+        private readonly ProductRepository _repo;
+        public ProductService(StoreContext  context, ProductRepository repo)
         {
             _context=context;
+             _repo=repo;
         }
-         public async Task<List<Product>> GetAllProducts (){
-            return await _context.Products.ToListAsync();
+         public async Task<IReadOnlyList<Product>> GetAllProducts (){
+            return await _repo.GetProductsAsync();
         }
 
         public async Task<Product> GetProductById(int id)
         {
-            return await _context.Products.FindAsync(id)
-            ?? throw new Exception("Product wasn't found");
+           return await _repo.GetProductByIdAsync(id);
             
         } 
 
