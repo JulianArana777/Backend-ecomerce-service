@@ -15,22 +15,44 @@ namespace Api.Service
 
         private readonly StoreContext _context;
         private readonly IGenericRepository<Product> _repo;
-        public ProductService(StoreContext  context, IGenericRepository<Product> repo)
+        public ProductService(StoreContext context, IGenericRepository<Product> repo)
         {
-            _context=context;
-             _repo=repo;
+            _context = context;
+            _repo = repo;
         }
-         public async Task<IReadOnlyList<Product>> GetAllProducts (){
-            var spec = new ProductsBransTypeSpecification ();
-            return await _repo.ListAsync(spec);
+        public async Task<IReadOnlyList<ProductDTO>> GetAllProducts()
+        {
+            var spec = new ProductsBransTypeSpecification();
+            var products = await _repo.ListAsync(spec);
+            return products.Select(product => new ProductDTO
+            {
+                Id = product.Id,
+                name = product.name,
+                description = product.description,
+                price = product.price,
+                pictureurl = product.pictureurl,
+                producttype = product.producttype,
+                productbrand = product.productbrand
+
+            }).ToList();
         }
 
-        public async Task<Product> GetProductById(int id)
+        public async Task<ProductDTO> GetProductById(int id)
         {
-           var spec = new ProductsBransTypeSpecification(id);
-           return await _repo.GetEntityWithSpecificationAsync(spec);
-            
-        } 
+            var spec = new ProductsBransTypeSpecification(id);
+            var product = await _repo.GetEntityWithSpecificationAsync(spec);
+            return new ProductDTO
+            {
+                Id = product.Id,
+                name = product.name,
+                description = product.description,
+                price = product.price,
+                pictureurl = product.pictureurl,
+                producttype = product.producttype,
+                productbrand = product.productbrand
+            };
+
+        }
 
         public async Task<Product> CreateProduct(ProductDTO dto)
         {
@@ -40,13 +62,18 @@ namespace Api.Service
                 throw new Exception("There isn't a Name");
             }
 
-            if (String.IsNullOrWhiteSpace(dto.description)){
+            if (String.IsNullOrWhiteSpace(dto.description))
+            {
                 throw new Exception("There is not description");
             }
             var product = new Product
             {
-                name= dto.name,
-                description= dto.description
+                name = dto.name,
+                description = dto.description,
+                price = dto.price,
+                pictureurl = dto.pictureurl,
+                producttype = dto.producttype,
+                productbrand = dto.productbrand
             };
             _context.Products.Add(product);
             await _context.SaveChangesAsync();

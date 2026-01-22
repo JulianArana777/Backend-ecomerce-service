@@ -1,9 +1,19 @@
+using API.Entities;
+
 namespace Api.DTO
 {
     public class ProductDTO()
     {
-      
-        public String name {get;set;}=null!;
-        public String description {get;set;}=null!;
+
+
+        public int Id { get; set; }
+        public String? name { get; set; }
+        public String? description { get; set; }
+        public float price { get; set; }
+        public String? pictureurl { get; set; }
+        public ProductType producttype { get; set; }       
+        public ProductBrand productbrand { get; set; }
+       
+
     }
 }
