@@ -13,19 +13,19 @@ namespace Api.Service
     {
 
         private readonly StoreContext _context;
-        private readonly IproductRepository _repo;
-        public ProductService(StoreContext  context, IproductRepository repo)
+        private readonly IGenericRepository<Product> _repo;
+        public ProductService(StoreContext  context, IGenericRepository<Product> repo)
         {
             _context=context;
              _repo=repo;
         }
          public async Task<IReadOnlyList<Product>> GetAllProducts (){
-            return await _repo.GetProductsAsync();
+            return await _repo.GetAllAsync();
         }
 
         public async Task<Product> GetProductById(int id)
         {
-           return await _repo.GetProductByIdAsync(id);
+           return await _repo.GetByIdAsync(id);
             
         } 
 

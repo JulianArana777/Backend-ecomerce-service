@@ -24,6 +24,7 @@ builder.Services.AddScoped<ProductBrandService>();
 builder.Services.AddScoped<IproductRepository, ProductRepository>();
 builder.Services.AddScoped<IproductBrandRepository, ProductBrandRepository>();
 builder.Services.AddScoped<IproductTypeRepository,ProductTypeRepository>();
+builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
 
 var app = builder.Build();
 
