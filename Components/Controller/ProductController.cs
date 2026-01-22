@@ -14,9 +14,13 @@ namespace API.Controller
     public class ProductController : ControllerBase
     {
         private readonly ProductService _service;
-        public ProductController(ProductService service)
+        private readonly ProductBrandService _brand;
+        private readonly ProductTypeService _Type;
+        public ProductController(ProductService service,ProductBrandService brand,ProductTypeService Type)
         {
             _service=service;
+            _brand=brand;
+            _Type=Type;
         }
 
         [HttpGet]
@@ -31,6 +35,17 @@ namespace API.Controller
         {
             var product =await _service.GetProductById(id);
             return Ok(product);
+        }
+
+        [HttpGet("brand")]
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetAllBrands()
+        {
+         return Ok(await _brand.GetAllProductBrands());   
+        }
+        [HttpGet("type")]
+        public async Task<ActionResult<IReadOnlyList<ProductType>>> GetAllTypes()
+        {
+         return Ok(await _Type.GetAllProductTypes());   
         }
 
         [HttpPost]

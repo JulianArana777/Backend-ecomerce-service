@@ -1,6 +1,7 @@
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using Api.DTO;
+using Api.Interface;
 using Api.Repository;
 using API.Entities;
 using API.Repository;
@@ -12,8 +13,8 @@ namespace Api.Service
     {
 
         private readonly StoreContext _context;
-        private readonly ProductRepository _repo;
-        public ProductService(StoreContext  context, ProductRepository repo)
+        private readonly IproductRepository _repo;
+        public ProductService(StoreContext  context, IproductRepository repo)
         {
             _context=context;
              _repo=repo;
