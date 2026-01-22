@@ -17,13 +17,19 @@ namespace Api.Repository
 
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            return await _config.Products.FindAsync(id) ?? 
+            return await _config.Products
+            .Include(p=>p.producttype)
+            .Include(p=>p.productbrand)
+            .FirstOrDefaultAsync(p=>p.Id == id) ?? 
             throw new Exception("Product Wasn't Found");
         }
 
         public async Task<IReadOnlyList<Product>> GetProductsAsync()
         {
-            return await _config.Products.ToListAsync() ??
+            return await _config.Products
+            .Include(p=>p.producttype)
+            .Include(p=>p.productbrand)
+            .ToListAsync() ??
             throw new Exception ("There aren't any products");
         }
     }
