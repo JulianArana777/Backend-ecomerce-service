@@ -27,7 +27,8 @@ namespace Api.Service
 
         public async Task<Product> GetProductById(int id)
         {
-           return await _repo.GetByIdAsync(id);
+           var spec = new ProductsBransTypeSpecification(id);
+           return await _repo.GetEntityWithSpecificationAsync(spec);
             
         } 
 

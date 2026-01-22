@@ -25,9 +25,9 @@ namespace API.Repository
            throw new Exception("Nothing was found");
         }
 
-        public Task<T> GetEntityWithSpecificationAsync(ISpecification<T> spec)
+        public async Task<T> GetEntityWithSpecificationAsync(ISpecification<T> spec)
         {
-            throw new NotImplementedException();
+            return await ApplyASpecification(spec).FirstOrDefaultAsync();
         }
 
         public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
