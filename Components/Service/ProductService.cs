@@ -5,6 +5,7 @@ using Api.Interface;
 using Api.Repository;
 using API.Entities;
 using API.Repository;
+using API.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Service
@@ -20,7 +21,8 @@ namespace Api.Service
              _repo=repo;
         }
          public async Task<IReadOnlyList<Product>> GetAllProducts (){
-            return await _repo.GetAllAsync();
+            var spec = new ProductsBransTypeSpecification ();
+            return await _repo.ListAsync(spec);
         }
 
         public async Task<Product> GetProductById(int id)

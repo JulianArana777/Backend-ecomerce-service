@@ -1,4 +1,5 @@
 using API.Entities;
+using API.Specifications;
 
 namespace API.Repository
 {
@@ -6,5 +7,8 @@ namespace API.Repository
     {
         Task<T> GetByIdAsync (int id);
         Task<IReadOnlyList<T>> GetAllAsync();
+        Task<T> GetEntityWithSpecificationAsync(ISpecification<T> spec);
+        Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
+
     } 
 }
