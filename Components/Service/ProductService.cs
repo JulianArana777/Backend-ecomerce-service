@@ -6,6 +6,7 @@ using Api.Repository;
 using API.Entities;
 using API.Repository;
 using API.Specifications;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Service
@@ -15,69 +16,44 @@ namespace Api.Service
 
         private readonly StoreContext _context;
         private readonly IGenericRepository<Product> _repo;
-        public ProductService(StoreContext context, IGenericRepository<Product> repo)
+        private readonly IMapper _mapper;
+        public ProductService(StoreContext context, IGenericRepository<Product> repo, IMapper mapper)
         {
             _context = context;
             _repo = repo;
+            _mapper= mapper;
         }
         public async Task<IReadOnlyList<ProductDTO>> GetAllProducts()
         {
             var spec = new ProductsBransTypeSpecification();
             var products = await _repo.ListAsync(spec);
-            return products.Select(product => new ProductDTO
-            {
-                Id = product.Id,
-                name = product.name,
-                description = product.description,
-                price = product.price,
-                pictureurl = product.pictureurl,
-                producttype = product.producttype,
-                productbrand = product.productbrand
-
-            }).ToList();
+            return _mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductDTO>>(products);
         }
 
         public async Task<ProductDTO> GetProductById(int id)
         {
             var spec = new ProductsBransTypeSpecification(id);
             var product = await _repo.GetEntityWithSpecificationAsync(spec);
-            return new ProductDTO
-            {
-                Id = product.Id,
-                name = product.name,
-                description = product.description,
-                price = product.price,
-                pictureurl = product.pictureurl,
-                producttype = product.producttype,
-                productbrand = product.productbrand
-            };
+            return _mapper.Map<Product,ProductDTO>(product);
 
         }
 
-        public async Task<Product> CreateProduct(ProductDTO dto)
+      /*  public async Task<ProductDTO> CreateProduct(Product product)
         {
 
-            if (String.IsNullOrWhiteSpace(dto.name))
+          
+            var DTO = new ProductDTO
             {
-                throw new Exception("There isn't a Name");
-            }
-
-            if (String.IsNullOrWhiteSpace(dto.description))
-            {
-                throw new Exception("There is not description");
-            }
-            var product = new Product
-            {
-                name = dto.name,
-                description = dto.description,
-                price = dto.price,
-                pictureurl = dto.pictureurl,
-                producttype = dto.producttype,
-                productbrand = dto.productbrand
+                name =  product.name,
+                description =  product.description,
+                price =  product.price,
+                pictureurl =  product.pictureurl,
+                producttype =  product.producttype.name,
+                productbrand =  product.productbrand.name
             };
-            _context.Products.Add(product);
+            _context.Products.Add(DTO);
             await _context.SaveChangesAsync();
-            return product;
-        }
+            return DTO;
+        }*/
     }
 }

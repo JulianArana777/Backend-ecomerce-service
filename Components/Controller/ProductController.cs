@@ -48,7 +48,7 @@ namespace API.Controller
          return Ok(await _Type.GetAllProductTypes());   
         }
 
-        [HttpPost]
+       /* [HttpPost]
         public async Task<IActionResult> CreateProduct ([FromBody] ProductDTO dto)
         {
           var product = await _service.CreateProduct(dto);
@@ -58,6 +58,6 @@ namespace API.Controller
                 product
             );
         }
-       
+       */
     }
 }

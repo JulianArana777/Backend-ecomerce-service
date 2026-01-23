@@ -2,6 +2,7 @@ using Api.Interface;
 using Api.Repository;
 using Api.Service;
 using API.Data;
+using API.Helper;
 using API.Interface;
 using API.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ builder.Services.AddScoped<IproductRepository, ProductRepository>();
 builder.Services.AddScoped<IproductBrandRepository, ProductBrandRepository>();
 builder.Services.AddScoped<IproductTypeRepository,ProductTypeRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
 var app = builder.Build();
 

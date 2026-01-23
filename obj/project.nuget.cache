@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "e1uHKvoiy7g=",
+  "dgSpecHash": "RKNO+8ej/rg=",
   "success": true,
   "projectFilePath": "/home/julian/Proyectos/Ecom_.Net+Angular/backend/ApiBackend/ApiBackend.csproj",
   "expectedPackageFiles": [
+    "/home/julian/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
+    "/home/julian/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "/home/julian/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/julian/.nuget/packages/microsoft.aspnetcore.openapi/8.0.23/microsoft.aspnetcore.openapi.8.0.23.nupkg.sha512",
     "/home/julian/.nuget/packages/microsoft.build.framework/18.0.2/microsoft.build.framework.18.0.2.nupkg.sha512",

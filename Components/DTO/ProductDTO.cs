@@ -11,8 +11,8 @@ namespace Api.DTO
         public String? description { get; set; }
         public float price { get; set; }
         public String? pictureurl { get; set; }
-        public ProductType producttype { get; set; }       
-        public ProductBrand productbrand { get; set; }
+        public String producttype { get; set; }       
+        public String productbrand { get; set; }
        
 
     }
