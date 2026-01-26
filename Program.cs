@@ -4,6 +4,7 @@ using Api.Service;
 using API.Data;
 using API.Helper;
 using API.Interface;
+using API.Middleware;
 using API.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -59,6 +60,7 @@ using (var scope = app.Services.CreateScope())
 
 
 if (app.Environment.IsDevelopment())
+app.UseMiddleware<ExceptionMiddleware>();
 {
     app.UseDeveloperExceptionPage();
 
