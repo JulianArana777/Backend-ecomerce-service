@@ -55,13 +55,18 @@ using (var scope = app.Services.CreateScope())
 
 
 // 3. Middlewares (Pipeline)
+
+
+
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
+
     app.UseSwagger();
     app.UseSwaggerUI();
     app.UseStaticFiles();
 }
-
+app.UseStatusCodePagesWithReExecute("/errors/{404}");
 app.UseHttpsRedirection();
 app.MapControllers();
 
