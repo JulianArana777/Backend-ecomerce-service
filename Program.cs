@@ -2,10 +2,12 @@ using Api.Interface;
 using Api.Repository;
 using Api.Service;
 using API.Data;
+using API.ERRORS;
 using API.Helper;
 using API.Interface;
 using API.Middleware;
 using API.Repository;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +30,21 @@ builder.Services.AddScoped<IproductBrandRepository, ProductBrandRepository>();
 builder.Services.AddScoped<IproductTypeRepository,ProductTypeRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = ActionContext =>
+    {
+        var errors = ActionContext.ModelState
+        .Where(e=>e.Value.Errors.Count > 0)
+        .SelectMany(x=> x.Value.Errors)
+        .Select(x=>x.ErrorMessage).ToArray();
+        var errorResponse = new ValidationErrorResponse
+        {
+            Errors=errors
+        };
+        return new BadRequestObjectResult (errorResponse);
+    };
+});
 
 var app = builder.Build();
 
