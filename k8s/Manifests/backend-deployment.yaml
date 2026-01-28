@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        
+        image: julianarana777/apibackend:latest 
+        ports:
+        - containerPort: 5079
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        - name: ConnectionStrings__DefaultConnection
+          value: "Server=mysql;Database=storedb;Uid=root;Pwd=storepass;"
+        - name: ASPNETCORE_URLS
+          value: "http://+:5079"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  type: NodePort 
+  ports:
+  - port: 5079
+    targetPort: 5079
+  selector:
+    app: backend
