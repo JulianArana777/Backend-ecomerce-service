@@ -19,6 +19,10 @@ namespace API.Specifications
             {
                 query= query.OrderByDescending(spec.OrderByDesc);
             }
+            if (spec.isPaginEnable)
+            {
+                query=query.Skip(spec.Skip).Take(spec.Take);
+            }
             query=spec.Includes.Aggregate(query,(current,include) => current.Include(include));
 
             return query;

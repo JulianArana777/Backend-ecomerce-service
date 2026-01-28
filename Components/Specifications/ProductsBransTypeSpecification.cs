@@ -5,8 +5,8 @@ namespace API.Specifications
 {
     public class ProductsBransTypeSpecification : BaseSpecification<Product>
     {
-        public ProductsBransTypeSpecification(string sort, int ? Brand , int ? Type):
-        base (x=> (!Brand.HasValue || x.productbrandid == Brand) && (!Type.HasValue || x.producttypeid==Type))
+        public ProductsBransTypeSpecification(ProductSpecParams par):
+        base (x=> (!par.Brand.HasValue || x.productbrandid == par.Brand) && (!par.Type.HasValue || x.producttypeid==par.Type))
         {
 
 
@@ -15,9 +15,9 @@ namespace API.Specifications
             AddInclude(x=>x.producttype);
             AddOrderBy(x=>x.name);
 
-            if (!string.IsNullOrEmpty(sort))
+            if (!string.IsNullOrEmpty(par.sort))
             {
-                switch (sort)
+                switch (par.sort)
                 {
                     case "priceAsc":
                     AddOrderBy(p=>p.price);

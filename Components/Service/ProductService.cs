@@ -4,6 +4,7 @@ using Api.DTO;
 using Api.Interface;
 using Api.Repository;
 using API.Entities;
+using API.ERRORS;
 using API.Repository;
 using API.Specifications;
 using AutoMapper;
@@ -23,9 +24,9 @@ namespace Api.Service
             _repo = repo;
             _mapper= mapper;
         }
-        public async Task<IReadOnlyList<ProductDTO>> GetAllProducts(String ? sort, int ? BrandId, int ? TypeId)
+        public async Task<IReadOnlyList<ProductDTO>> GetAllProducts(ProductSpecParams par)
         {
-            var spec = new ProductsBransTypeSpecification(sort,BrandId,TypeId);
+            var spec = new ProductsBransTypeSpecification(par);
             var products = await _repo.ListAsync(spec);
             return _mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductDTO>>(products);
         }

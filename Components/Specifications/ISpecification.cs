@@ -8,5 +8,8 @@ namespace API.Specifications
         List<Expression<Func<T,object>>> Includes {get;}
         Expression<Func<T,object>> OrderBy{get;set;}
          Expression<Func<T,object>> OrderByDesc{get;set;}
+         int Take {get;}
+         int Skip {get;}
+         Boolean isPaginEnable {get;}
     }
 }

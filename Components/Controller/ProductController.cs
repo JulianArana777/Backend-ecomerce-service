@@ -3,6 +3,7 @@ using Api.DTO;
 using Api.Service;
 using API.Entities;
 using API.Repository;
+using API.Specifications;
 using Microsoft.AspNetCore.Mvc;
 using SQLitePCL;
 
@@ -24,9 +25,9 @@ namespace API.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProducts(String ? sort,int ? Brand, int ? Type)
+        public async Task<IActionResult> GetProducts([FromQuery] ProductSpecParams par)
         {
-            var product = await _service.GetAllProducts(sort,Brand,Type);
+            var product = await _service.GetAllProducts(par);
             return Ok(product);
         }
 
