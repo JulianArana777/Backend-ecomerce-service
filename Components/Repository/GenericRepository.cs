@@ -13,6 +13,11 @@ namespace API.Repository
             _context=context;
         }
 
+        public async Task<int> CountAsyn(ISpecification<T> spec)
+        {
+            return await ApplyASpecification(spec).CountAsync();
+        }
+
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync()??

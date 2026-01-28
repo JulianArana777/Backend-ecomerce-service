@@ -9,6 +9,7 @@ namespace API.Repository
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<T> GetEntityWithSpecificationAsync(ISpecification<T> spec);
         Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
+        Task<int> CountAsyn (ISpecification<T> spec);
 
     } 
 }

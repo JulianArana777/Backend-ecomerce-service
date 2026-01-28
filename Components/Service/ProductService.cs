@@ -5,6 +5,7 @@ using Api.Interface;
 using Api.Repository;
 using API.Entities;
 using API.ERRORS;
+using API.Helper;
 using API.Repository;
 using API.Specifications;
 using AutoMapper;
@@ -24,11 +25,15 @@ namespace Api.Service
             _repo = repo;
             _mapper= mapper;
         }
-        public async Task<IReadOnlyList<ProductDTO>> GetAllProducts(ProductSpecParams par)
+        public async Task<Pagination<ProductDTO>> GetAllProducts(ProductSpecParams par)
         {
             var spec = new ProductsBransTypeSpecification(par);
+            var countspec= new ProductWithFiltersOrCountSpecification(par);
+            var totalitems= await _repo.CountAsyn(countspec);
             var products = await _repo.ListAsync(spec);
-            return _mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductDTO>>(products);
+            var data
+          = _mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductDTO>>(products);
+          return new Pagination<ProductDTO>(par.PageIndex,par.PageSize,totalitems,data);
         }
 
         public async Task<ProductDTO> GetProductById(int id)
