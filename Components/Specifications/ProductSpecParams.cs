@@ -15,6 +15,12 @@ namespace API.Specifications
         public int ? Brand {get;set;}
         public int ?Type{get;set;}
         public String ? sort {get;set;}
+        private String ?_search;
+        public String ?search
+        {
+            get=>_search;
+            set=>_search=value.ToLower();
+        }
 
     }
 }
