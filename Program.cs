@@ -20,10 +20,17 @@ builder.Services.AddDbContext<StoreContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-    options.UseMySql(
-        connectionString,
-        ServerVersion.AutoDetect(connectionString)
-    );
+   
+    var serverVersion = new MySqlServerVersion(new Version(8, 0, 0)); 
+
+    options.UseMySql(connectionString, serverVersion, mysqlOptions =>
+    {
+      
+        mysqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 10,
+            maxRetryDelay: TimeSpan.FromSeconds(5),
+            errorNumbersToAdd: null);
+    });
 });
 
 builder.Services.AddControllers();
@@ -110,4 +117,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run("http://0.0.0.0:5079");
