@@ -27,22 +27,27 @@ builder.Services.AddScoped<ProductTypeService>();
 builder.Services.AddScoped<ProductBrandService>();
 builder.Services.AddScoped<IproductRepository, ProductRepository>();
 builder.Services.AddScoped<IproductBrandRepository, ProductBrandRepository>();
-builder.Services.AddScoped<IproductTypeRepository,ProductTypeRepository>();
-builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+builder.Services.AddScoped<IproductTypeRepository, ProductTypeRepository>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
+builder.Services.AddCors(opt => opt.AddPolicy("CorsPolicy", policy =>
+{
+    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200");
+}
+));
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.InvalidModelStateResponseFactory = ActionContext =>
     {
         var errors = ActionContext.ModelState
-        .Where(e=>e.Value.Errors.Count > 0)
-        .SelectMany(x=> x.Value.Errors)
-        .Select(x=>x.ErrorMessage).ToArray();
+        .Where(e => e.Value.Errors.Count > 0)
+        .SelectMany(x => x.Value.Errors)
+        .Select(x => x.ErrorMessage).ToArray();
         var errorResponse = new ValidationErrorResponse
         {
-            Errors=errors
+            Errors = errors
         };
-        return new BadRequestObjectResult (errorResponse);
+        return new BadRequestObjectResult(errorResponse);
     };
 });
 
@@ -56,13 +61,13 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<StoreContext>();
     var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 
-    try 
-    {        
+    try
+    {
         // Aplica migraciones pendientes
         await context.Database.MigrateAsync();
 
         // LLAMADA AL SEED: Inserta los datos de los JSON
-        await StoreContextSeed.SeedAsync(context);             
+        await StoreContextSeed.SeedAsync(context);
     }
     catch (Exception ex)
     {
@@ -77,16 +82,25 @@ using (var scope = app.Services.CreateScope())
 
 
 if (app.Environment.IsDevelopment())
-app.UseMiddleware<ExceptionMiddleware>();
 {
+    app.UseMiddleware<ExceptionMiddleware>();
     app.UseDeveloperExceptionPage();
 
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseStaticFiles();
 }
-app.UseStatusCodePagesWithReExecute("/errors/{404}");
+
+app.UseStatusCodePagesWithReExecute("/errors/{0}");
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseCors("CorsPolicy");
+
+app.UseAuthorization();
+
+
+
+
 app.MapControllers();
 
 app.Run();
