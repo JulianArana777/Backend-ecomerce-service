@@ -14,6 +14,7 @@ namespace API.Specifications
             AddInclude(x=>x.productbrand);
             AddInclude(x=>x.producttype);
             AddOrderBy(x=>x.name);
+            ApplyPaging(par.PageSize * (par.PageIndex-1),par.PageSize);
 
             if (!string.IsNullOrEmpty(par.sort))
             {
