@@ -156,3 +156,5 @@
 /home/julian/Proyectos/Ecom_.Net+Angular/backend/ApiBackend/bin/Debug/net10.0/AutoMapper.dll
 /home/julian/Proyectos/Ecom_.Net+Angular/backend/ApiBackend/bin/Debug/net10.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 /home/julian/Proyectos/Ecom_.Net+Angular/backend/ApiBackend/bin/Debug/net10.0/ApiBackend.staticwebassets.runtime.json
+/home/julian/Proyectos/Ecom_.Net+Angular/backend/ApiBackend/bin/Debug/net10.0/MySqlConnector.dll
+/home/julian/Proyectos/Ecom_.Net+Angular/backend/ApiBackend/bin/Debug/net10.0/Pomelo.EntityFrameworkCore.MySql.dll

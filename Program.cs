@@ -17,7 +17,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<StoreContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+    options.UseMySql(
+        connectionString,
+        ServerVersion.AutoDetect(connectionString)
+    );
+});
 
 builder.Services.AddControllers();
 
@@ -54,7 +61,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 var app = builder.Build();
 
 // 2. Aplicar Migraciones al arrancar
-// Usamos un bloque "scope" para obtener el DbContext de forma segura
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;

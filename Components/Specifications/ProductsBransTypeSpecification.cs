@@ -1,5 +1,4 @@
 using API.Entities;
-using SQLitePCL;
 
 namespace API.Specifications
 {
