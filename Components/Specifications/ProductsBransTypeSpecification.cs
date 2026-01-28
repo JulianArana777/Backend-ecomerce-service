@@ -7,11 +7,14 @@ namespace API.Specifications
     {
         public ProductsBransTypeSpecification(string sort)
         {
+
+
+
             AddInclude(x=>x.productbrand);
             AddInclude(x=>x.producttype);
             AddOrderBy(x=>x.name);
 
-            if (string.IsNullOrEmpty(sort))
+            if (!string.IsNullOrEmpty(sort))
             {
                 switch (sort)
                 {

@@ -24,7 +24,7 @@ namespace API.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProducts(String sort)
+        public async Task<IActionResult> GetProducts(String ? sort)
         {
             var product = await _service.GetAllProducts(sort);
             return Ok(product);
