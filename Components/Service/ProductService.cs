@@ -23,9 +23,9 @@ namespace Api.Service
             _repo = repo;
             _mapper= mapper;
         }
-        public async Task<IReadOnlyList<ProductDTO>> GetAllProducts(String ? sort)
+        public async Task<IReadOnlyList<ProductDTO>> GetAllProducts(String ? sort, int ? BrandId, int ? TypeId)
         {
-            var spec = new ProductsBransTypeSpecification(sort);
+            var spec = new ProductsBransTypeSpecification(sort,BrandId,TypeId);
             var products = await _repo.ListAsync(spec);
             return _mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductDTO>>(products);
         }

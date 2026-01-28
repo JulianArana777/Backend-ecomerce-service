@@ -5,7 +5,8 @@ namespace API.Specifications
 {
     public class ProductsBransTypeSpecification : BaseSpecification<Product>
     {
-        public ProductsBransTypeSpecification(string sort)
+        public ProductsBransTypeSpecification(string sort, int ? Brand , int ? Type):
+        base (x=> (!Brand.HasValue || x.productbrandid == Brand) && (!Type.HasValue || x.producttypeid==Type))
         {
 
 
